@@ -11,8 +11,8 @@ import {
   Anchor,
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
-import { Link, NavLink } from 'react-router-dom';
-import { MoonStars, Sun } from 'tabler-icons-react';
+import { NavLink } from 'react-router-dom';
+import { IconSun, IconMoon } from '@tabler/icons';
 
 const useStyles = createStyles((theme) => ({
   links: {
@@ -77,7 +77,7 @@ const useStyles = createStyles((theme) => ({
 export default function Header() {
   const { classes } = useStyles();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const Icon = colorScheme === 'dark' ? Sun : MoonStars;
+  const Icon = colorScheme === 'dark' ? IconSun : IconMoon;
 
   return (
     <HeaderComponent height={64} mb={40}>
