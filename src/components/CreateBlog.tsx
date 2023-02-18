@@ -4,17 +4,15 @@ import { RichTextEditor } from '@mantine/rte';
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import dayjs from 'dayjs';
+import { v4 as uuidv4 } from 'uuid';
 
-type FormType = {
+export type FormType = {
+  Id?: string;
   Title: string;
   By: string;
   Content: string;
   Time?: Date;
 };
-
-const mutation = useMutation((values: FormType) => {
-  return axios.post(process.env.URL_SHEET || '', values);
-});
 
 export default function CreateBlog() {
   const form = useForm({
@@ -30,9 +28,14 @@ export default function CreateBlog() {
     },
   });
 
+  const mutation = useMutation((values: FormType) => {
+    return axios.post(process.env.URL_SHEET || '', values);
+  });
+
   const submitForm = async (values: FormType) => {
     mutation.mutate({
       ...values,
+      Id: uuidv4(),
       Time: dayjs().toDate(),
     });
     form.reset();
@@ -61,11 +64,11 @@ export default function CreateBlog() {
           value={form.values.Content}
           onChange={(value) => form.setFieldValue('Content', value)}
         />
-        {!form.isValid('Content') && (
+        {/* {!form.isValid('Content') && (
           <Text fz="xs" c="red">
             Invalid Content
           </Text>
-        )}
+        )} */}
 
         <Group position="center" mt="md">
           <Button type="submit" loading={mutation.isLoading}>
